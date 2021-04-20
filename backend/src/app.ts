@@ -11,12 +11,12 @@ export const app = express();
 
 const corsOptionsDelegate = (req, callback) => {
   const corsOptions: cors.CorsOptions = {
-    credentials: true,
+    credentials: true
   };
 
   corsOptions.origin = [];
   if (corsOptions.origin.length === 0) {
-    corsOptions.origin = ["http://localhost:4200", "http://127.0.0.1:4200"];
+    corsOptions.origin = ["http://localhost:3000", "http://127.0.0.1:3000"];
   }
   callback(null, corsOptions);
 };
@@ -42,7 +42,7 @@ mongo.MongoClient.connect(config.db.url, { useUnifiedTopology: true }).then(
   }
 );
 
-const port = 8081;
+const port = process.env.PORT || 80;
 
 app.listen(port, () => {
   return console.log(`server is listening on ${port}`);
