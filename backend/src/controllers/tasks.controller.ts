@@ -92,3 +92,36 @@ export const deleteTask = async (req, res, next) => {
 
   res.status(204).end();
 };
+
+export const updateTasks = async (req, res, next) => {
+  logger.info({ handler: "tasks/updateTasks", body: req.body });
+
+  const tasks = req.body;
+  if (!Array.isArray(tasks)) {
+    const error = `Body of this request should be an array of tasks`;
+    logger.error(error);
+    res.status(422).json(error);
+    next();
+    return;
+  }
+
+  const validationErrors = [];
+  for (const task of tasks) {
+    const validation = ValidationSchema_UpdateTask.validate(task);
+    if (validation.error) {
+      validationErrors.push({ error: validation.error, taskId: task._id });
+    }
+  }
+
+  if (validationErrors.length > 0) {
+    logger.error(validationErrors);
+    res.status(422).json(validationErrors);
+    next();
+    return;
+  }
+
+  const updatedTasks = await TasksDA.updateManyTasks(
+    tasks.map((task) => new Task(task))
+  );
+  res.status(200).json(updatedTasks);
+};

@@ -7,6 +7,7 @@ import {
   updateTask,
   deleteTask,
   getTask,
+  updateTasks,
 } from "../controllers/tasks.controller";
 
 export const router = express.Router();
@@ -14,5 +15,6 @@ export const router = express.Router();
 router.get("/", asyncHandler(getTasks));
 router.get("/:id", asyncHandler(getTask));
 router.post("/", asyncHandler(createTask));
+router.put("/", asyncHandler(updateTasks));
 router.put("/:id", asyncHandler(updateTask));
 router.delete("/:id", asyncHandler(deleteTask));

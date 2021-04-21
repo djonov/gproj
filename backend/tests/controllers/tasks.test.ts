@@ -2,6 +2,7 @@ import "mocha";
 import { expect } from "chai";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+import { ObjectId } from "mongodb";
 
 import { app } from "../../src/app";
 import { Task, TaskStatus } from "../../src/models/task.model";
@@ -9,7 +10,7 @@ import { create } from "../../src/dataaccess/tasks.da";
 
 chai.use(chaiHttp);
 describe("### Tasks controller", () => {
-  let taskId;
+  const taskIds = [];
   const newTaskStatus = TaskStatus.INPROGRESS;
   const newTaskContent = "Hello World";
 
@@ -83,7 +84,7 @@ describe("### Tasks controller", () => {
         status: newTaskStatus,
       })
     ).then((task: Task) => {
-      taskId = task._id;
+      taskIds.push(task._id);
       done();
     });
   });
@@ -93,7 +94,7 @@ describe("### Tasks controller", () => {
     const status = TaskStatus.COMPLETED;
     chai
       .request(app)
-      .put(`/tasks/${taskId}`)
+      .put(`/tasks/${taskIds.slice(-1)}`)
       .send({
         content,
         status,
@@ -113,7 +114,7 @@ describe("### Tasks controller", () => {
     const content = "Hello World 3!";
     chai
       .request(app)
-      .put(`/tasks/${taskId}`)
+      .put(`/tasks/${taskIds.slice(-1)}`)
       .send({
         content,
       })
@@ -132,7 +133,7 @@ describe("### Tasks controller", () => {
     const status = TaskStatus.COMPLETED;
     chai
       .request(app)
-      .put(`/tasks/${taskId}`)
+      .put(`/tasks/${taskIds.slice(-1)}`)
       .send({
         status,
       })
@@ -150,7 +151,7 @@ describe("### Tasks controller", () => {
   it("should fail update because of invalid content parameter", (done) => {
     chai
       .request(app)
-      .put(`/tasks/${taskId}`)
+      .put(`/tasks/${taskIds.slice(-1)}`)
       .send({
         content: 8,
       })
@@ -163,7 +164,7 @@ describe("### Tasks controller", () => {
   it("should fail update because of invalid status parameter", (done) => {
     chai
       .request(app)
-      .put(`/tasks/${taskId}`)
+      .put(`/tasks/${taskIds.slice(-1)}`)
       .send({
         status: "x",
       })
@@ -176,10 +177,28 @@ describe("### Tasks controller", () => {
   it("should delete task", (done) => {
     chai
       .request(app)
-      .delete(`/tasks/${taskId}`)
+      .delete(`/tasks/${taskIds.slice(-1)}`)
       .send()
       .end((err, res) => {
         expect(res.status).to.be.equal(204);
+        done();
+      });
+  });
+
+  it("should update multiple tasks at once", (done) => {
+    const updateTasks = taskIds.map((taskId: string) => {
+      return new Task({
+        _id: new ObjectId(taskId),
+        status: TaskStatus.COMPLETED,
+        content: `Hello world - ${taskId}`,
+      });
+    });
+    chai
+      .request(app)
+      .put(`/tasks`)
+      .send(updateTasks)
+      .end((err, res) => {
+        expect(res.status).to.be.equal(200);
         done();
       });
   });
