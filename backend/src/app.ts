@@ -11,7 +11,7 @@ export const app = express();
 
 const corsOptionsDelegate = (req, callback) => {
   const corsOptions: cors.CorsOptions = {
-    credentials: true
+    credentials: true,
   };
 
   corsOptions.origin = [];
@@ -26,7 +26,7 @@ app.use(cors(corsOptionsDelegate));
 
 // Setup all the parser we need
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(routes.todo);
 
