@@ -28,7 +28,7 @@ app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes.todo);
+app.use("/api/v1", routes.todo);
 
 // Simple error handler
 app.use(errorHandler);
