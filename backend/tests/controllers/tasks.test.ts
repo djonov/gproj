@@ -11,7 +11,7 @@ import { create } from "../../src/dataaccess/tasks.da";
 chai.use(chaiHttp);
 describe("### Tasks controller", () => {
   const taskIds = [];
-  const newTaskStatus = TaskStatus.INPROGRESS;
+  const newTaskStatus = TaskStatus.ACTIVE;
   const newTaskContent = "Hello World";
 
   before((done) => {
@@ -26,7 +26,7 @@ describe("### Tasks controller", () => {
       .post("/tasks")
       .send({
         content: "Hello World!",
-        status: TaskStatus.INPROGRESS,
+        status: TaskStatus.ACTIVE,
       })
       .end((err, res) => {
         expect(err).to.be.null;
@@ -106,6 +106,9 @@ describe("### Tasks controller", () => {
         expect(res.body).to.have.property("status");
         expect(res.body.content).to.be.equal(content);
         expect(res.body.status).to.be.equal(status);
+        expect(res.body.changeDate).to.not.be.null;
+        expect(res.body.createDate).to.not.be.null;
+        expect(res.body.changeDate).to.not.equal(res.body.createDate);
         done();
       });
   });
@@ -125,6 +128,9 @@ describe("### Tasks controller", () => {
         expect(res.body).to.have.property("status");
         expect(res.body.content).to.be.equal(content);
         expect(res.body.status).to.be.equal(newTaskStatus);
+        expect(res.body.changeDate).to.not.be.null;
+        expect(res.body.createDate).to.not.be.null;
+        expect(res.body.changeDate).to.not.equal(res.body.createDate);
         done();
       });
   });
@@ -144,6 +150,9 @@ describe("### Tasks controller", () => {
         expect(res.body).to.have.property("status");
         expect(res.body.content).to.be.equal(newTaskContent);
         expect(res.body.status).to.be.equal(status);
+        expect(res.body.changeDate).to.not.be.null;
+        expect(res.body.createDate).to.not.be.null;
+        expect(res.body.changeDate).to.not.equal(res.body.createDate);
         done();
       });
   });

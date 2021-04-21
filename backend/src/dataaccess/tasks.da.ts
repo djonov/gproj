@@ -35,6 +35,7 @@ export const getById = async (_id: string): Promise<Task | null> => {
 export const create = async (task: Task): Promise<Task> => {
   const db = getDb();
   task.setMetadata();
+
   const createResult = await db.collection("tasks").insertOne(task);
   task._id = createResult.insertedId;
   return task;
@@ -46,12 +47,13 @@ export const updateById = async (
 ): Promise<Task> => {
   const db = getDb();
   task.setMetadata();
+
   const result = await db.collection("tasks").findOneAndUpdate(
     {
       _id: new ObjectId(_id),
     },
     {
-      $set: task,
+      $set: _.omit(task, "_id"),
     },
     {
       returnOriginal: false,
@@ -62,6 +64,8 @@ export const updateById = async (
 
 /**
  * This is one example of a code that would be helpful if the application needs to update huge amount of data at once
+ * Further improvement would be updating in groups if possible. For example if there is update on the status only,
+ * the update can be divided in two updateMany operations, one for active and other for completed
  * @param tasks It receieves a list of tasks that have different fields for update
  * @returns Updated tasks
  */

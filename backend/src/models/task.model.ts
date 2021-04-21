@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 import { Entity } from "./entity";
 
 export enum TaskStatus {
-  INPROGRESS = "inprogress",
+  ACTIVE = "active",
   COMPLETED = "completed",
 }
 

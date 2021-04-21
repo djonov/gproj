@@ -70,7 +70,7 @@ export const updateTask = async (req, res, next) => {
     return;
   }
 
-  const task = await TasksDA.updateById(_id, new Task(req.body));
+  const task = await TasksDA.updateById(_id, new Task({ ...req.body, _id }));
 
   res.status(200).json(task);
 };
