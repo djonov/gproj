@@ -23,7 +23,7 @@ describe("### Tasks controller", () => {
   it("should create a task", (done) => {
     chai
       .request(app)
-      .post("/tasks")
+      .post("/api/v1/tasks")
       .send({
         content: "Hello World!",
         status: TaskStatus.ACTIVE,
@@ -39,7 +39,7 @@ describe("### Tasks controller", () => {
   it("should fail create because of missing parameters", (done) => {
     chai
       .request(app)
-      .post(`/tasks`)
+      .post(`/api/v1/tasks`)
       .send({
         status: newTaskStatus,
       })
@@ -52,7 +52,7 @@ describe("### Tasks controller", () => {
   it("should fail create because of invalid content parameter", (done) => {
     chai
       .request(app)
-      .post(`/tasks`)
+      .post(`/api/v1/tasks`)
       .send({
         content: 8,
         status: newTaskStatus,
@@ -66,7 +66,7 @@ describe("### Tasks controller", () => {
   it("should fail create because of invalid status parameter", (done) => {
     chai
       .request(app)
-      .post(`/tasks`)
+      .post(`/api/v1/tasks`)
       .send({
         content: newTaskContent,
         status: "x",
@@ -94,7 +94,7 @@ describe("### Tasks controller", () => {
     const status = TaskStatus.COMPLETED;
     chai
       .request(app)
-      .put(`/tasks/${taskIds.slice(-1)}`)
+      .put(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send({
         content,
         status,
@@ -117,7 +117,7 @@ describe("### Tasks controller", () => {
     const content = "Hello World 3!";
     chai
       .request(app)
-      .put(`/tasks/${taskIds.slice(-1)}`)
+      .put(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send({
         content,
       })
@@ -139,7 +139,7 @@ describe("### Tasks controller", () => {
     const status = TaskStatus.COMPLETED;
     chai
       .request(app)
-      .put(`/tasks/${taskIds.slice(-1)}`)
+      .put(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send({
         status,
       })
@@ -160,7 +160,7 @@ describe("### Tasks controller", () => {
   it("should fail update because of invalid content parameter", (done) => {
     chai
       .request(app)
-      .put(`/tasks/${taskIds.slice(-1)}`)
+      .put(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send({
         content: 8,
       })
@@ -173,7 +173,7 @@ describe("### Tasks controller", () => {
   it("should fail update because of invalid status parameter", (done) => {
     chai
       .request(app)
-      .put(`/tasks/${taskIds.slice(-1)}`)
+      .put(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send({
         status: "x",
       })
@@ -186,7 +186,7 @@ describe("### Tasks controller", () => {
   it("should delete task", (done) => {
     chai
       .request(app)
-      .delete(`/tasks/${taskIds.slice(-1)}`)
+      .delete(`/api/v1/tasks/${taskIds.slice(-1)}`)
       .send()
       .end((err, res) => {
         expect(res.status).to.be.equal(204);
@@ -204,7 +204,7 @@ describe("### Tasks controller", () => {
     });
     chai
       .request(app)
-      .put(`/tasks`)
+      .put(`/api/v1/tasks`)
       .send(updateTasks)
       .end((err, res) => {
         expect(res.status).to.be.equal(200);
