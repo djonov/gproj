@@ -1,0 +1,102 @@
+:root {
+  --color-progress: #34c759;
+  --color-complete: #d1d1d6;
+  --color-delete: #ff3b30;
+  --color-submit: #007aff;
+  --color-subtle-black: #252525;
+  --color-transparent-black: rgba(0, 0, 0, 0.5);
+
+  --font-size-large: 24px;
+  --font-size-small: 16px;
+
+  --margin-standard: 16px;
+  --padding-standard: 16px;
+  --padding-small: 8px;
+
+  --box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
+  --task-action-width-regular: 50px;
+  --task-action-width-mobile: 30px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 36px;
+}
+
+.app__container {
+  width: 80%;
+  height: 80%;
+  max-width: 700px;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.submit-button {
+  background-color: var(--color-submit) !important;
+  color: white !important;
+  font-weight: normal;
+}
+
+/* Inputs */
+.default-input {
+  width: calc(100% - 32px);
+  height: 24px;
+  padding: var(--padding-standard);
+  border: 0;
+  outline: 0;
+  font-size: var(--font-size-large);
+  color: var(--color-subtle-black);
+  box-shadow: var(--box-shadow);
+}
+
+/* Text styling */
+.strikethrough {
+  text-decoration: line-through;
+}
+
+/* Dialog */
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: var(--margin-standard);
+}
+
+/* Material UI override */
+.MuiCircularProgress-svg {
+  color: var(--color-submit);
+}
+
+.MuiPaper-root {
+  width: 100%;
+}
+
+.MuiTabs-flexContainer > button {
+  flex: 1;
+}
+
+.MuiTab-textColorPrimary {
+  color: var(--color-submit) !important;
+}
+
+/* Miscellanious */
+.hidden {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .app__container {
+    width: 90%;
+  }
+}

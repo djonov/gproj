@@ -1,0 +1,30 @@
+.task-editor__container {
+  display: flex;
+  justify-content: center;
+}
+
+.task-editor__container input {
+  width: calc(100% - 100px);
+}
+
+.task-editor__container .task-editor__add-button {
+  border-radius: 0;
+  width: 150px;
+  font-size: var(--font-size-small);
+}
+
+@media (max-width: 640px) {
+  .task-editor__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .task-editor__container input {
+    width: calc(100% - 32px);
+    margin-bottom: var(--margin-standard);
+  }
+
+  .task-editor__container .task-editor__add-button {
+    width: 100%;
+  }
+}

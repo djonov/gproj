@@ -1,0 +1,7 @@
+.tasks-list__spinner-container {
+  text-align: center;
+}
+
+.tasks-list__container > div {
+  margin: var(--margin-standard) 0;
+}

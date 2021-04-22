@@ -1,0 +1,6 @@
+.task-filters__container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: var(--margin-standard) 0;
+}
