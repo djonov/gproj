@@ -9,8 +9,6 @@ import { setDb } from "./db";
 
 export const app = express();
 
-const port = process.env.PORT || 80;
-
 const corsOptionsDelegate = (req, callback) => {
   const corsOptions: cors.CorsOptions = {
     credentials: true,
@@ -19,9 +17,9 @@ const corsOptionsDelegate = (req, callback) => {
   corsOptions.origin = [];
   if (corsOptions.origin.length === 0) {
     corsOptions.origin = [
-      `http://localhost:${port}`,
-      `http://127.0.0.1:${port}`,
-      `https://d1wz5e1mq69gvh.cloudfront.net`,
+      `http://localhost:3000`,
+      `http://127.0.0.1:3000`,
+      `https://gproj.s3-website.eu-central-1.amazonaws.com`,
     ];
   }
   callback(null, corsOptions);
@@ -47,6 +45,8 @@ mongo.MongoClient.connect(config.db.url, { useUnifiedTopology: true }).then(
     setDb(value.db());
   }
 );
+
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   return console.log(`server is listening on ${port}`);
